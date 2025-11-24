@@ -187,142 +187,31 @@
 						</div>
 					</div>							
 					<div class="row">
-						<div class="active-recent-blog-carusel">
-							<div class="single-recent-blog-post item">
-								<div class="thumb">
-                                    <img class="img-fluid" src="{% static 'img/b1.jpg' %}" alt="">
+                        <div class="active-recent-blog-carusel">
+                            {% for Post in posts %}
+                                <div class="single-recent-blog-post item">
+                                    <div class="thumb">
+                                        <img class="img-fluid" src="{{ Post.image.url }}" alt="{{Post.title}}">
+                                    </div>
+                                    <div class="details">
+                                        <div class="tags">
+                                            <ul>
+                                                {% for cat in Post.category.all %}
+                                                    <li>
+                                                        <a href="{% url 'blog:blog_category' cat_name=cat.name %}">{{ cat.name }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <a href="#"><h4 class="title">{{ Post.title }}</h4></a>
+                                        <p>{{ Post.content|truncatewords:3 }}</p>
+                                        <h6 class="date">{{ Post.published_date }}</h6>
+                                    </div>
                                 </div>
-								<div class="details">
-									<div class="tags">
-										<ul>
-											<li>
-												<a href="#">Travel</a>
-											</li>
-											<li>
-												<a href="#">Life Style</a>
-											</li>											
-										</ul>
-									</div>
-									<a href="#"><h4 class="title">Low Cost Advertising</h4></a>
-									<p>
-										Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.
-									</p>
-									<h6 class="date">31st January,2018</h6>
-								</div>	
-							</div>
-							<div class="single-recent-blog-post item">
-								<div class="thumb">
-                                    <img class="img-fluid" src="{% static 'img/b2.jpg' %}" alt="">
-                                </div>
-								<div class="details">
-									<div class="tags">
-										<ul>
-											<li>
-												<a href="#">Travel</a>
-											</li>
-											<li>
-												<a href="#">Life Style</a>
-											</li>											
-										</ul>
-									</div>
-									<a href="#"><h4 class="title">Creative Outdoor Ads</h4></a>
-									<p>
-										Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.
-									</p>
-									<h6 class="date">31st January,2018</h6>
-								</div>	
-							</div>
-							<div class="single-recent-blog-post item">
-								<div class="thumb">
-                                    <img class="img-fluid" src="{% static 'img/b3.jpg' %}" alt="">
-                                </div>
-								<div class="details">
-									<div class="tags">
-										<ul>
-											<li>
-												<a href="#">Travel</a>
-											</li>
-											<li>
-												<a href="#">Life Style</a>
-											</li>											
-										</ul>
-									</div>
-									<a href="#"><h4 class="title">It's Classified How To Utilize Free</h4></a>
-									<p>
-										Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.
-									</p>
-									<h6 class="date">31st January,2018</h6>
-								</div>	
-							</div>	
-							<div class="single-recent-blog-post item">
-								<div class="thumb">
-                                    <img class="img-fluid" src="{% static 'img/b1.jpg' %}" alt="">
-                                </div>
-								<div class="details">
-									<div class="tags">
-										<ul>
-											<li>
-												<a href="#">Travel</a>
-											</li>
-											<li>
-												<a href="#">Life Style</a>
-											</li>											
-										</ul>
-									</div>
-									<a href="#"><h4 class="title">Low Cost Advertising</h4></a>
-									<p>
-										Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.
-									</p>
-									<h6 class="date">31st January,2018</h6>
-								</div>	
-							</div>
-							<div class="single-recent-blog-post item">
-								<div class="thumb">
-                                    <img class="img-fluid" src="{% static 'img/b2.jpg' %}" alt="">
-                                </div>
-								<div class="details">
-									<div class="tags">
-										<ul>
-											<li>
-												<a href="#">Travel</a>
-											</li>
-											<li>
-												<a href="#">Life Style</a>
-											</li>											
-										</ul>
-									</div>
-									<a href="#"><h4 class="title">Creative Outdoor Ads</h4></a>
-									<p>
-										Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.
-									</p>
-									<h6 class="date">31st January,2018</h6>
-								</div>	
-							</div>
-							<div class="single-recent-blog-post item">
-								<div class="thumb">
-                                    <img class="img-fluid" src="{% static 'img/b3.jpg' %}" alt="">
-                                </div>
-								<div class="details">
-									<div class="tags">
-										<ul>
-											<li>
-												<a href="#">Travel</a>
-											</li>
-											<li>
-												<a href="#">Life Style</a>
-											</li>											
-										</ul>
-									</div>
-									<a href="#"><h4 class="title">It's Classified How To Utilize Free</h4></a>
-									<p>
-										Acres of Diamonds… you’ve read the famous story, or at least had it related to you. A farmer.
-									</p>
-									<h6 class="date">31st January,2018</h6>
-								</div>	
-							</div>														
+                            {% endfor %}
+                        </div>
 
-						</div>
-					</div>
+                    </div>
 				</div>	
 			</section>
 			<!-- End recent-blog Area -->

@@ -2937,11 +2937,13 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .recent-blog-area .single-recent-blog-post .thumb img {
-  -webkit-transition: all 0.3s ease 0s;
-  -moz-transition: all 0.3s ease 0s;
-  -o-transition: all 0.3s ease 0s;
-  transition: all 0.3s ease 0s;
+  max-width: 100%;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
 }
+
 
 .recent-blog-area .single-recent-blog-post .tags {
   margin: 20px 0px;
@@ -3656,6 +3658,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .widget-wrap .popular-post-widget .popular-post-list .thumb img {
   width: 100%;
+  
 }
 
 .widget-wrap .popular-post-widget .single-post-list {

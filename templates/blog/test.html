@@ -1,0 +1,21 @@
+{% load tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+<h1>Testing Page</h1>
+<hr>
+
+{% po as po %}
+<p>تعداد پست‌ها: {{ po.id }}</p>
+<p>خلاصه پست: {{ po.content|simp }}</p>
+
+<hr>
+<h3>پست محبوب:</h3>
+{% pap %}
+
+</body>
+</html>

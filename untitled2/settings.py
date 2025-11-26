@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'mysity', 'blog' ,'django.contrib.humanize'
     ,'django_extensions','django.contrib.sites'
     ,'django.contrib.sitemaps'
-    ,'robots' ,'debug_toolbar','taggit','django_summernote','captcha'
+    ,'robots' ,'debug_toolbar','taggit','django_summernote','captcha' , 'user_mangmant'
 ]
 MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',  

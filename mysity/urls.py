@@ -19,6 +19,7 @@ urlpatterns = [
     path('summernote/',include('django_summernote.urls')),
     path('captcha/',include('captcha.urls')),
     path('user_mange/',include('user_mangmant.urls')) ,
+    #path('sing_up/',include('user_mangmant.urls')),
     path(
         "sitemap.xml",
         sitemap,

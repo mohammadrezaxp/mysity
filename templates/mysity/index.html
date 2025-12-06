@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <!-- استایل دکمه Logout -->
+    <!-- استایل دکمه‌ها -->
     <style>
         .neu-logout-btn {
             display: inline-flex;
@@ -21,6 +21,7 @@
                     -6px -6px 12px rgba(255, 255, 255, 0.7);
             transition: all 0.3s ease;
             margin-top: 20px;
+            margin-right: 15px;
         }
 
         .neu-logout-btn:hover {
@@ -49,9 +50,61 @@
             animation: slideOut 0.6s ease;
         }
 
+        /* دکمه Sign Up */
+        .neu-signup-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: #27ae60;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow:
+                    6px 6px 12px rgba(0, 0, 0, 0.15),
+                    -6px -6px 12px rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .neu-signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                    8px 8px 16px rgba(0, 0, 0, 0.15),
+                    -8px -8px 16px rgba(255, 255, 255, 0.7);
+            color: #229954;
+            text-decoration: none;
+        }
+
+        .neu-signup-btn:active {
+            transform: translateY(0);
+            box-shadow:
+                    inset 3px 3px 6px rgba(0, 0, 0, 0.15),
+                    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+        }
+
+        .neu-signup-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .neu-signup-btn:hover svg {
+            animation: bounceIn 0.6s ease;
+        }
+
         @keyframes slideOut {
             0%, 100% { transform: translateX(0); }
             50% { transform: translateX(5px); }
+        }
+
+        @keyframes bounceIn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
     </style>
 
@@ -67,18 +120,28 @@
                         If you are looking at blank cassettes on the web, you may be very confused at the difference in price. You may see some for as low as $.17 each.
                     </p>
 
-                    <!-- دکمه Logout با استایل Neumorphism -->
+                    <!-- دکمه Logout -->
                     <a href="{% url 'User_manage:logout' %}" class="neu-logout-btn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-                            <polyline points="16 17 21 12 16 7"/>
-                            <line x1="21" y1="12" x2="9" y2="12"/>
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
                         </svg>
                         Logout
                     </a>
 
-                </div>
+                    <!-- دکمه Sign Up -->
+                    <a href="{% url 'User_manage:sing_up' %}" class="neu-signup-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                        </svg>
+                        Sign Up
+                    </a>
 
+                </div>
             </div>
         </div>
     </section>
@@ -140,7 +203,6 @@
     </section>
     <!-- End popular-destination Area -->
 
-
     <!-- Start other-issue Area -->
     <section class="other-issue-area section-gap">
         <div class="container">
@@ -183,7 +245,6 @@
                     <div class="single-other-issue">
                         <div class="thumb">
                             <img class="img-fluid" src="{% static 'img/o3.jpg' %}" alt="">
-
                         </div>
                         <a href="#">
                             <h4>To Do List</h4>
@@ -211,10 +272,6 @@
     </section>
     <!-- End other-issue Area -->
 
-
-
-
-
     <!-- Start home-about Area -->
     <section class="home-about-area">
         <div class="container-fluid">
@@ -237,7 +294,6 @@
         </div>
     </section>
     <!-- End home-about Area -->
-
 
     <!-- Start blog Area -->
     <section class="recent-blog-area section-gap">
@@ -274,7 +330,6 @@
                         </div>
                     {% endfor %}
                 </div>
-
             </div>
         </div>
     </section>

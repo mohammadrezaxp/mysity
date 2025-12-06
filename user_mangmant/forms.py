@@ -1,8 +1,8 @@
 from django import forms
-from .models import login
-class log_from(forms.ModelForm):
+from .models import Sign_Up
+class Singup_from(forms.ModelForm):
     class Meta :
-        model = login
-        fields = ['username', 'password']
+        model = Sign_Up
+        fields = ['first_name','last_name','email','phon_number',' birthday','password']
 
 

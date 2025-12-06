@@ -48,7 +48,7 @@ def sing_up_page(request):
 
         print(f"🔍 Register attempt - Username: {username}, Email: {email}")
 
-        # بررسی فیلدهای ضروری
+
         if not username or not email or not password or not password_confirm:
             messages.error(request,'All fields are required.')
             return render(request,'User_mage/index.html')

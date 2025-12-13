@@ -23,19 +23,23 @@ def blog_home (request, cat_name = None,auther_username = None, tag_name = None)
         posts = posts.get_page(1)
     context ={'posts':posts}
     return render(request,'blog/blog-home.html',context)
-def blog_single (request, name) :
-   # post = Post.objects.filter(status=1)
-    posts = get_object_or_404(Post,pk = name,status=1)
-    posts.counted_views = posts.counted_views +1
+def blog_single(request, name):
+    if not request.user.is_authenticated:
+        return redirect(f'/ref/user_mange/login?next={request.path}')
+
+    posts = get_object_or_404(Post, pk=name, status=1)
+    posts.counted_views = posts.counted_views + 1
     posts.save()
+
     prev_post = Post.objects.filter(id__lt=posts.id, status=1).order_by('-id').first()
     next_post = Post.objects.filter(id__gt=posts.id, status=1).order_by('id').first()
-    context ={'posts':posts,
-              'next_post':next_post,
-              'prev_post':prev_post
 
-              }
-    return render(request,'blog/blog-single.html',context)
+    context = {
+        'posts': posts,
+        'next_post': next_post,
+        'prev_post': prev_post
+    }
+    return render(request, 'blog/blog-single.html', context)
 def test(request):
     return render(request, 'blog/test.html')
 
@@ -54,6 +58,8 @@ def blog_search(request) :
     return render(request,'blog/blog-home.html',context)
 
 def Leave_a_Comments(request):
+    if not request.user.is_authenticated:
+        return redirect('/ref/user_mange/login')
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():

@@ -16,6 +16,7 @@ class Post(models.Model):
     category = models.ManyToManyField(Category)
     status = models.BooleanField()
     tag = TaggableManager()
+    login_re =models.BooleanField(default=False)
     published_date = models.DateTimeField(default=timezone.now)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

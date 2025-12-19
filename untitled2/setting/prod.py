@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-^#(*+$_7#)^ww-orc58au3z9v&9r4bzn*8cq=d7jklc=_4kyj!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["95.134.130.121",'weplay.beauty']
 
 DATABASES = {
     'default': {

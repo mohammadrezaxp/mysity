@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    'multi_captcha_admin',
+    #'multi_captcha_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

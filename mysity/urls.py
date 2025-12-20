@@ -27,5 +27,7 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -25,7 +25,7 @@ def blog_home (request, cat_name = None,auther_username = None, tag_name = None)
     return render(request,'blog/blog-home.html',context)
 def blog_single(request, name):
     if not request.user.is_authenticated:
-        return redirect(f'/ref/user_mange/login?next={request.path}')
+        return redirect(f'/ref/user_manage/login?next={request.path}')
 
     posts = get_object_or_404(Post, pk=name, status=1)
     posts.counted_views = posts.counted_views + 1
@@ -59,7 +59,7 @@ def blog_search(request) :
 
 def Leave_a_Comments(request):
     if not request.user.is_authenticated:
-        return redirect('/ref/user_mange/login')
+        return redirect('/ref/user_manage/login')
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():

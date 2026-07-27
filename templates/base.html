@@ -2,25 +2,43 @@
 <!DOCTYPE html>
 <html lang="zxx" class="no-js">
 <head>
-    <!-- Mobile Specific Meta -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Favicon-->
-    <link rel="shortcut icon" href="{% static 'img/fav.png' %}">
-    <!-- Author Meta -->
-    <meta name="author" content="colorlib">
-    <!-- Meta Description -->
-    <meta name="description" content="">
-    <!-- Meta Keyword -->
-    <meta name="keywords" content="">
-    <!-- meta character set -->
+    <!-- Basic Page Needs -->
     <meta charset="UTF-8">
-    <!-- Site Title -->
-    <title>Travel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}Mysity - Modern Blog Platform{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}A full-featured blog platform built with Django 5.x featuring user authentication, categories, tags, comments, and SEO optimization.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}django, blog, python, web development, portfolio, cms, python django, full stack, web developer{% endblock %}">
+    <meta name="author" content="MohammadReza Mahmoudi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:title" content="{% block og_title %}Mysity - Modern Blog Platform{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}A full-featured blog platform built with Django 5.x featuring user authentication, categories, tags, comments, and SEO optimization.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'img/social-og.png' %}{% endblock %}">
+    <meta property="og:site_name" content="Mysity">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:title" content="{% block twitter_title %}Mysity - Modern Blog Platform{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}A full-featured blog platform built with Django 5.x{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% static 'img/social-og.png' %}{% endblock %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'img/fav.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/fav.png' %}">
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-    <!--
-    CSS
-    ============================================= -->
+
+    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
@@ -31,9 +49,8 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
-    <!-- 🎯 SweetAlert2 برای پاپ‌آپ -->
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 <body>
 <header id="header">

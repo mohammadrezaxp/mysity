@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load tags%}
+{% load tags %}
+
+{% block title %}{{ posts.title }} - Mysity Blog{% endblock %}
+{% block meta_description %}{{ posts.content|truncatechars:160|striptags }}{% endblock %}
+{% block meta_keywords %}{% for tag in posts.tag.all %}{{ tag.name }},{% endfor %}{{ posts.category.name|default:"" }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ posts.title }} - Mysity Blog{% endblock %}
+{% block og_description %}{{ posts.content|truncatechars:200|striptags }}{% endblock %}
+{% block og_image %}{% if posts.image %}{{ posts.image.url }}{% else %}{% static 'img/og-default.png' %}{% endif %}{% endblock %}
+{% block twitter_title %}{{ posts.title }} - Mysity Blog{% endblock %}
+{% block twitter_description %}{{ posts.content|truncatechars:200|striptags }}{% endblock %}
+
 {% block content %}
 
 		  

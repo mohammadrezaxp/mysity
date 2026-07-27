@@ -8,7 +8,7 @@
 {% block og_type %}article{% endblock %}
 {% block og_title %}{{ posts.title }} - Mysity Blog{% endblock %}
 {% block og_description %}{{ posts.content|truncatechars:200|striptags }}{% endblock %}
-{% block og_image %}{% if posts.image %}{{ posts.image.url }}{% else %}{% static 'img/og-default.png' %}{% endif %}{% endblock %}
+{% block og_image %}{% if posts.image %}{{ request.scheme }}://{{ request.get_host }}{{ posts.image.url }}{% else %}{% static 'img/og-default.png' %}{% endif %}{% endblock %}
 {% block twitter_title %}{{ posts.title }} - Mysity Blog{% endblock %}
 {% block twitter_description %}{{ posts.content|truncatechars:200|striptags }}{% endblock %}
 

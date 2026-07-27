@@ -24,8 +24,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/ref/home/', permanent=False)),
     path('ref/', include('mysity.urls')),
-    path('blog/', include('blog.urls')),
-]
+        path('blog/', include('blog.urls')),
+        path('ref/user_manage/', include('user_mangmant.urls')),
+    ]
 
 if settings.DEBUG:
     from django.conf.urls.static import static

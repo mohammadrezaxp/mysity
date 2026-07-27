@@ -1,100 +1,97 @@
-# Mysity - Django Web Application
+# Mysity - Full-Stack Blog Platform 🌐
 
-A robust, full-featured web application built with Python and the Django web framework. This project implements a modular structure featuring user authentication, management, and a dynamic blogging system.
+![Django](https://img.shields.io/badge/Django-5.x-092E20?style=flat-square&logo=django)
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=flat-square&logo=python)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?style=flat-square&logo=postgresql)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-## 🚀 Features
+> A production-ready blog platform built with Django 5.x featuring a modern UI, user authentication, rich content management, and SEO optimization.
 
-- **User Management System:** Custom user registration, login, profile handling, and authentication workflows.
-- **Blog Engine:** Dynamic content management, article publishing, categories, tags, and comments.
-- **SEO Optimized:** Built-in dynamic XML sitemaps for search engine visibility.
-- **Contact System:** Ticket-based contact form for user inquiries.
-- **RSS Feed:** Built-in RSS feed for blog posts.
-- **Clean Architecture:** Standard Django structure with Models, Views, Forms, and Templates.
+---
 
-## 🛠️ Tech Stack
+## 🔥 What I Built
 
-| Layer | Technology |
-|-------|------------|
-| Backend | Python, Django 5.x |
-| Database | PostgreSQL / SQLite |
-| Frontend | HTML5, CSS3, JavaScript |
-| Tools | django-summernote, django-captcha, django-taggit |
+- **User Authentication System** — Complete login, logout, registration with session management
+- **Blog Engine** — Full CRUD operations with categories, tags, and author management
+- **Comments System** — Authenticated users can leave comments on posts
+- **WYSIWYG Editor** — Rich text editor powered by Django Summernote
+- **SEO Optimized** — Dynamic XML sitemaps for search engines
+- **RSS Feed** — Built-in RSS feed for blog subscribers
+- **Responsive Design** — Modern UI with smooth animations
+- **CAPTCHA Protection** — Bot protection on forms
+
+## 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Django 5.x | Backend Framework |
+| PostgreSQL / SQLite | Database |
+| HTML5 / CSS3 | Frontend |
+| django-summernote | WYSIWYG Editor |
+| django-taggit | Tagging System |
+| django-captcha | Bot Protection |
+| django-debug-toolbar | Development Tools |
 
 ## 📁 Project Structure
 
 ```
-untitled2/
-├── mysity/              # Core project settings & URLs
-│   ├── settings.py
-│   ├── urls.py
-│   ├── views.py
-│   └── forms.py
-├── blog/                # Blog app
-│   ├── models.py        # Post, Category, Tag, Comment
-│   ├── views.py         # Blog views
-│   ├── urls.py
-│   └── templates/
-├── user_manage/         # User authentication app
-│   ├── views.py         # Login, Logout, Signup
-│   └── urls.py
-├── templates/            # Global templates
-│   ├── base.html
-│   ├── blog/
-│   └── mysity/
+mysity/
+├── mysity/              # Core Django settings
+├── blog/                # Blog app (models, views, templates)
+├── user_manage/         # Authentication app
+├── templates/           # Global templates
+├── requirements.txt     # Dependencies
 └── manage.py
 ```
 
-## 📦 Installation & Setup
+## 🚀 Key Features Demo
 
-### 1. Clone the repository
+| Feature | Screenshot |
+|---------|------------|
+| Home Page | ![Home](docs/screenshots/home.png) |
+| Blog Post | ![Post](docs/screenshots/post.png) |
+| Login | ![Login](docs/screenshots/login.png) |
+| Admin Panel | ![Admin](docs/screenshots/admin.png) |
+
+## 📦 Installation
+
 ```bash
+# Clone the project
 git clone https://github.com/mohammadrezaxp/mysity.git
 cd mysity
-```
 
-### 2. Create virtual environment
-```bash
-python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-.venv\Scripts\activate   # Windows
-```
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-### 3. Install dependencies
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### 4. Apply database migrations
-```bash
+# Run migrations
 python manage.py migrate
-```
 
-### 5. Create superuser (optional)
-```bash
+# Create superuser
 python manage.py createsuperuser
-```
 
-### 6. Run the development server
-```bash
+# Run server
 python manage.py runserver
 ```
 
-Visit `http://localhost:8000` in your browser.
+## 🔗 Important URLs
 
-## 🔑 Key URLs
+| Page | URL |
+|------|-----|
+| Home | `/ref/home/` |
+| Blog | `/blog/` |
+| Login | `/ref/user_manage/login/` |
+| Register | `/ref/user_manage/sing_up/` |
+| Contact | `/ref/contact/` |
+| Admin | `/admin/` |
 
-| URL | Description |
-|-----|-------------|
-| `/ref/home/` | Home page |
-| `/ref/contact/` | Contact form |
-| `/ref/about/` | About page |
-| `/ref/user_manage/login/` | User login |
-| `/ref/user_manage/sing_up/` | User registration |
-| `/blog/` | Blog home |
-| `/blog/<id>/` | Single post |
-| `/admin/` | Admin panel |
-| `/summernote/` | WYSIWYG editor |
+## 📜 License
 
-## 📝 License
+This project is open source and available under the [MIT License](LICENSE).
 
-This project is open-source and available for personal and commercial use.
+---
+
+**Built with ❤️ by [mohammadrezaxp](https://github.com/mohammadrezaxp)**

@@ -10,7 +10,7 @@
 
 ## Project Overview
 
-**Mysity** is a robust, production-ready Django-based content management and blog platform enhanced with a full-featured Django REST Framework (DRF) API. Designed as a strong junior-to-mid level backend portfolio project, it demonstrates clean architecture, secure authentication, robust database querying, automated testing, and containerized deployment readiness.
+**Mysity** is a robust Django-based content management and blog platform enhanced with a full-featured Django REST Framework (DRF) API. Designed as a strong junior-to-mid level backend portfolio project, it demonstrates clean architecture, secure authentication, robust database querying, automated testing, and containerized deployment readiness.
 
 ---
 
@@ -20,7 +20,7 @@
 - **RESTful API (DRF)**: Fully documented endpoints supporting pagination, filtering (`django-filter`), search, and ordering.
 - **JWT & Session Authentication**: Secure dual-authentication support using `SimpleJWT` alongside standard session auth.
 - **Role-Based Permissions**: Granular object-level permissions ensuring authors manage only their own posts/comments, while staff moderate content.
-- **Automated Testing**: Comprehensive test suite built with `pytest` and `pytest-django`.
+- **Automated Testing**: Automated test suite built with `pytest` and `pytest-django`.
 - **Database Flexibility**: Native support for SQLite (local development) and PostgreSQL (production via environment config).
 - **Containerization**: Fully configured `Dockerfile` and `docker-compose.yml` for multi-service orchestration (Web, PostgreSQL, Redis).
 - **API Documentation**: Interactive API docs powered by `drf-spectacular` (Swagger UI & ReDoc).

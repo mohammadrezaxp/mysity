@@ -1,7 +1,8 @@
 from django.contrib.syndication.views import Feed
-from django.utils.html import strip_tags
 from django.template.defaultfilters import truncatewords
-from .models import Post
+from django.utils.html import strip_tags
+
+from blog.visibility import public_posts
 
 
 class LatestEntriesFeed(Feed):
@@ -10,7 +11,7 @@ class LatestEntriesFeed(Feed):
     description = "You can see best blog "
 
     def items(self):
-        return Post.objects.filter(status=True)
+        return public_posts()
 
     def item_title(self, item):
         return item.title

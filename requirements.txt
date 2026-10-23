@@ -1,8 +1,8 @@
 asgiref==3.9.2
-bleach==6.3.0
+bleach[css]==6.3.0
 certifi==2025.11.12
 charset-normalizer==3.4.4
-Django==5.2.7
+Django==5.2.18
 django-debug-toolbar==6.1.0
 django-extensions==4.1
 django-multi-captcha-admin==2.0.0
@@ -35,3 +35,5 @@ pytest==8.3.4
 pytest-django==4.9.0
 python-dotenv==1.0.1
 dj-database-url==2.3.0
+
+whitenoise>=6.8,<7

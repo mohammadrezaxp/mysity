@@ -1,11 +1,11 @@
 <div class="comment-form">
-    <h4>Leave a Comment</h4>
+    <h4>Leave a Comment</h4>{{ form.errors }}
     <form method="post" action="{% url 'blog:blog_comment' %}">
         {% csrf_token %}
 
         <input type="hidden" name="post_id" value="{{ posts.id }}">
         {% if request.user.is_authenticated %}
-            <input type="hidden" name="name" value="{{ request.user.name }}">
+            <input type="hidden" name="name" value="{{ request.user.get_full_name|default:request.user.username }}">
             <input type="hidden" name="email" value="{{ request.user.email }}">
         {% else %}
         <div class="form-group form-inline">

@@ -1,94 +1,64 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.db import IntegrityError, transaction
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.utils.http import url_has_allowed_host_and_scheme
+from django.views.decorators.http import require_http_methods, require_POST
+
+from .forms import SignupForm
 
 
+@require_http_methods(["GET", "POST"])
 def loge_page(request):
     if request.user.is_authenticated:
-        return redirect('/ref/home/')
+        return redirect("index")
+    form = AuthenticationForm(
+        request, data=request.POST if request.method == "POST" else None
+    )
+    next_url = request.POST.get("next") or request.GET.get("next", "")
+    if not url_has_allowed_host_and_scheme(
+        next_url, {request.get_host()}, require_https=request.is_secure()
+    ):
+        next_url = reverse("index")
+    if request.method == "POST" and form.is_valid():
+        login(request, form.get_user())
+        if not request.POST.get("remember"):
+            request.session.set_expiry(0)
+        messages.success(request, "Welcome back!")
+        return redirect(next_url or "index")
+    if request.method == "POST":
+        messages.error(request, "Invalid username or password.")
+    return render(
+        request, "User_mage/login_user.html", {"form": form, "next": next_url}
+    )
 
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        remember = request.POST.get('remember')
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if not remember:
-                request.session.set_expiry(0)
-            messages.success(request, f'Welcome back, {user.username}!')
-            print(f'✅ Login successful - User:{user.username}')
-
-            next_url = request.POST.get('next') or request.GET.get('next', '/ref/home/')
-            return redirect(next_url)
-        else:
-            print(f"❌ Login failed - Invalid credentials for username: {username}")
-            messages.error(request, 'Invalid username or password')
-
-    next_url = request.GET.get('next', '')
-    context = {'next': next_url}
-    return render(request, 'User_mage/login_user.html', context)
-
-def logout_page (request):
+@require_POST
+def logout_page(request):
     logout(request)
-    messages.info(request,'you are logout as website')
-    return redirect('/ref/user_mange/login')
+    messages.info(request, "You have signed out.")
+    return redirect("User_manage:login")
 
 
-
+@require_http_methods(["GET", "POST"])
 def sing_up_page(request):
     if request.user.is_authenticated:
-        return redirect('/ref/home/')
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        password_confirm = request.POST.get('password_confirm')
-        first_name = request.POST.get('first_name', '')
-        last_name = request.POST.get('last_name', '')
-
-        print(f"🔍 Register attempt - Username: {username}, Email: {email}")
-
-
-        if not username or not email or not password or not password_confirm:
-            messages.error(request,'All fields are required.')
-            return render(request,'User_mage/index.html')
-
-        if password != password_confirm:
-            messages.error(request,'Passwords do not match')
-            return render(request,'User_mage/index.html')
-
-        if len(password) < 6:
-            messages.error(request, 'Password must be at least 6 characters')
-            return render(request, 'User_mage/index.html')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists')
-            return render(request, 'User_mage/index.html')
-
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already exists')
-            return render(request, 'User_mage/index.html')
-
+        return redirect("index")
+    data = request.POST.copy() if request.method == "POST" else None
+    if data is not None:
+        data["password1"] = data.get("password", "")
+        data["password2"] = data.get("password_confirm", "")
+    form = SignupForm(data)
+    if request.method == "POST" and form.is_valid():
         try:
-            user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-                first_name=first_name,
-                last_name=last_name
-            )
-            print(f"✅ User created: {username}")
-
+            with transaction.atomic():
+                user = form.save()
+        except IntegrityError:
+            form.add_error("username", "This username is already registered.")
+        else:
             login(request, user)
-            messages.success(request,f'Welcome {username}! Your account has been created successfully.')
-            return redirect('/ref/home/')
-        except Exception as e:
-            print(f"❌ Error creating user: {e}")
-            messages.error(request, 'An error occurred. Please try again.')
-            return render(request, 'User_mage/index.html')
-
-    return render(request ,'User_mage/index.html')
+            messages.success(request, "Your account has been created.")
+            return redirect("index")
+    return render(request, "User_mage/index.html", {"form": form})

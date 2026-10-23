@@ -1,11 +1,5 @@
 name: CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -13,55 +7,27 @@ jobs:
       postgres:
         image: postgres:17-alpine
         env:
-          POSTGRES_DB: db
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-        ports:
-          - 5432:5432
+          POSTGRES_DB: mysity
+          POSTGRES_USER: mysity
+          POSTGRES_PASSWORD: mysity
+        ports: ["5432:5432"]
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      redis:
-        image: redis:7-alpine
-        ports:
-          - 6379:6379
-
+          --health-cmd="pg_isready -U mysity"
+          --health-interval=5s --health-timeout=5s --health-retries=10
+    env:
+      DATABASE_URL: postgres://mysity:mysity@localhost:5432/mysity
+      SECRET_KEY: ci-only-test-key-not-for-deployment
+      DEBUG: "False"
+      ALLOWED_HOSTS: localhost,127.0.0.1,testserver
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        cache: 'pip'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run Django Checks
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/db
-        SECRET_KEY: ci-secret-key
-        DEBUG: False
-      run: |
-        python manage.py check
-
-    - name: Run Migrations Check
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/db
-        SECRET_KEY: ci-secret-key
-        DEBUG: False
-      run: |
-        python manage.py makemigrations --check --dry-run
-
-    - name: Run Tests
-      env:
-        DATABASE_URL: postgres://user:password@localhost:5432/db
-        SECRET_KEY: ci-secret-key
-        DEBUG: False
-      run: |
-        pytest -v
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python manage.py check --settings=untitled2.settings
+      - run: python manage.py makemigrations --check --dry-run --settings=untitled2.settings
+      - run: pytest -q
+      - run: python manage.py spectacular --file schema.yml --validate --fail-on-warn --settings=untitled2.settings
+      - run: docker build -t mysity:ci .

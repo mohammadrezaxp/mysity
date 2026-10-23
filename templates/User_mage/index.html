@@ -121,7 +121,7 @@
             </div>
 
             <form method="POST" action="{% url 'User_manage:sing_up' %}">
-                {% csrf_token %}
+                {% csrf_token %}{% if form.errors %}<div class="messages" role="alert">{{ form.errors }}</div>{% endif %}
                 <div class="form-grid">
                     <div class="form-group"><label>Username</label><input type="text" name="username" placeholder="Choose a username" required></div>
                     <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>

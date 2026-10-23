@@ -1,34 +1,65 @@
-from rest_framework import viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Q
-from blog.models import Post, Category, Comments
-from .serializers import PostSerializer, CategorySerializer, CommentSerializer
-from .permissions import IsAuthorOrReadOnly
+from rest_framework import filters, viewsets
+
+from blog.models import Category, Comments, Post
+from blog.visibility import visible_posts
+
+from .permissions import IsAuthorOrReadOnly, IsCommentAuthorOrStaff, IsStaffOrReadOnly
+from .serializers import CategorySerializer, CommentSerializer, PostSerializer
+
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthorOrReadOnly]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category', 'auther', 'status']
-    search_fields = ['title', 'content']
-    ordering_fields = ['published_date', 'counted_views']
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_fields = ["category", "auther", "status"]
+    search_fields = ["title", "content"]
+    ordering_fields = ["published_date", "counted_views"]
+    ordering = ["-published_date", "-pk"]
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        user = self.request.user
-        if user.is_authenticated and (user.is_staff or user.is_superuser):
-            return qs
-        if user.is_authenticated:
-            return qs.filter(Q(status=True) | Q(auther=user))
-        return qs.filter(status=True)
+        if getattr(self, "swagger_fake_view", False):
+            return Post.objects.none()
+        return (
+            visible_posts(self.request.user)
+            .select_related("auther")
+            .prefetch_related("category", "tag", "comment")
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(auther=self.request.user)
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.order_by("name", "pk")
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthorOrReadOnly]
+    permission_classes = [IsStaffOrReadOnly]
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comments.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthorOrReadOnly]
+    permission_classes = [IsCommentAuthorOrStaff]
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Comments.objects.none()
+        return (
+            Comments.objects.filter(post__in=visible_posts(self.request.user))
+            .select_related("author", "post")
+            .order_by("creat_date", "pk")
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(
+            author=self.request.user,
+            name=serializer.validated_data.get("name")
+            or self.request.user.get_full_name()
+            or self.request.user.username,
+            email=serializer.validated_data.get("email") or self.request.user.email,
+        )
